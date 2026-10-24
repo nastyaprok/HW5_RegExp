@@ -3,8 +3,7 @@ from pathlib import Path
 
 
 def to_salted_language(text: str) -> str:
-    """После каждой гласной добавляется некая постоянная согласная, например «с», и ещё раз эта же гласная."""
-    """After each vowel, a specific consonant—for example, "s"—is added, followed by that same vowel once again."""
+    """After each vowel (ru), a specific consonant—for example, "c"(ru)—is added, followed by that same vowel once again."""
     vowels = "аеёиоуыэюяАЕЁИОУЫЭЮЯ"
     result = []
 
@@ -17,7 +16,7 @@ def to_salted_language(text: str) -> str:
 
 
 def extract_chords(file_path: str) -> set[str]:
-    """ "Exctract found chords from a file with song's lyrics and chords."""
+    """Exctract found chords from a file with song's lyrics and chords."""
     chord_pattern = re.compile(
         r"\b[A-G][#b]?(?:m|maj|min|sus|dim|aug|\d)*(?:/[A-G][#b]?)?\b"
     )  # ¯\_(ツ)_/¯ what do we play on?
