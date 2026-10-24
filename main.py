@@ -39,4 +39,33 @@ def rename_files(
     sample_names: dict[str, str] | None = None,
     to_replace: bool = False,
 ) -> None:
-    pass
+    """Rename files by pattern or dictionary or by both consequence"""
+    for filename in os.listdir(dir):
+        # Filter by pattren
+        if pattern not in filename:
+            continue
+
+        old_path = os.path.join(dir, filename)
+        new_name = filename
+
+        # Replace by pattern
+        if new_pattern is not None:
+            new_name = new_name.replace(pattern, new_pattern)
+
+        # Replace by dict
+        if sample_names:
+            for old_sample, rep_sample in sample_names.items():
+                if old_sample in new_name:
+                    new_name = new_name.replace(old_sample, rep_sample)
+
+        # If no name change, skip
+        if new_name == filename:
+            continue
+
+        new_path = os.path.join(dir, new_name)
+
+        if to_replace:
+            os.replace(old_path, new_path)
+        else:
+            with open(old_path, "rb") as src, open(new_path, "wb") as dst:
+                dst.write(src.read())
